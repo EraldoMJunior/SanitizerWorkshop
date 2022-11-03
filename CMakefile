@@ -1,0 +1,21 @@
+option(SANITIZE "SANITIZE" OFF)
+
+if(${SANITIZE})
+  if(${OBFUSCATION})
+    MESSAGE(FATAL_ERROR "unable to sanitize and obfuscation")
+  endif()
+
+
+  if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    MESSAGE(FATAL_ERROR "unable to sanitize and release mode")
+  endif()
+
+  set(OBFUSCATION_ARGS "-DOBFUSCATION=OFF")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}  -fsanitize=address")
+
+endif()
+
+
+External project add
+
+${EXTERNAL_ARGS} ${OBFUSCATION_ARGS}
